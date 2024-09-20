@@ -1,3 +1,4 @@
+/* Global Reset */
 * {
     margin: 0;
     padding: 0;
@@ -9,6 +10,7 @@ body {
     background: #e3f2fd;
 }
 
+/* Chatbot Toggle Button */
 .chatbot-toggler {
     position: fixed;
     right: 40px;
@@ -23,16 +25,29 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background-color 0.3s ease;
 }
 
+.chatbot-toggler:hover {
+    background-color: #5a39d4;
+}
+
+/* Manage visibility of icons */
 .chatbot-toggler span {
     position: absolute;
+    transition: opacity 0.3s ease;
 }
 
-.chatbot-toggler span:last-child{
+/* Hide first icon (open) and show last icon (close) when chatbot is active */
+.show-Chatbot .chatbot-toggler span:first-child {
     opacity: 0;
 }
 
+.show-Chatbot .chatbot-toggler span:last-child {
+    opacity: 1;
+}
+
+/* Chatbot Container */
 .chatbot {
     position: fixed;
     width: 320px;
@@ -40,12 +55,24 @@ body {
     right: 40px;
     bottom: 100px;
     border-radius: 15px;
-    box-shadow: 0 0 128px 0 rgba(0, 0, 00.1),
-        0 32px 64px -48px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 128px rgba(0, 0, 0, 0.1), 0 32px 64px -48px rgba(0, 0, 0, 0.5);
     overflow: hidden;
+    transform: scale(0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
+
+.show-Chatbot .chatbot {
+    transform: scale(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Chatbot Header */
 .chatbot header {
+    position: relative;
     background-color: #724ae8;
     padding: 16px 0;
     text-align: center;
@@ -55,13 +82,24 @@ body {
     color: #fff;
     font-size: 1.4rem;
 }
+.chatbot header span{
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    color: #fff;
+    cursor: pointer;
+    display: none;
+    transform:translateY(-50%) ;
+   }
 
+/* Chatbox (Message Container) */
 .chatbot .chatbox {
     height: 410px;
     overflow-y: auto;
     padding: 30px 20px 70px;
 }
 
+/* Incoming and Outgoing Chats */
 .chatbox .chat {
     display: flex;
 }
@@ -84,20 +122,21 @@ body {
 }
 
 .chatbox .chat p {
-    color: #fff;
     max-width: 75%;
     font-size: 0.95rem;
     padding: 12px 16px;
     border-radius: 10px 10px 0 10px;
     background: #724ae8;
+    color: #fff;
 }
 
 .chatbox .incoming p {
-    color: black;
     background: #f2f2f2;
+    color: #000;
     border-radius: 10px 10px 10px 0;
 }
 
+/* Chat Input Section */
 .chatbot .chat-input {
     position: absolute;
     bottom: 0;
@@ -129,6 +168,24 @@ body {
     visibility: hidden;
 }
 
-.chat-input textarea:valid~span {
+/* Show send button when textarea is valid */
+.chat-input textarea:valid ~ span {
     visibility: visible;
+}
+
+@media(max-width:490px){
+ .chatbot{
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+ }
+ .chatbot .chatbox{
+    height: 90%;
+ }
+ .chatbot header span{
+    display: block;
+ }
+
 }
